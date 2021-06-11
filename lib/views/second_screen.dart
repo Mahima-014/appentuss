@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:appentus_task/controller/controller.dart';
 import 'package:appentus_task/models/APIModel.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ class _SecondScreenState extends State<SecondScreen> {
   int width;
   Future<List<APIModel>> listOfData;
   Controller con = Controller();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -78,4 +81,6 @@ class _SecondScreenState extends State<SecondScreen> {
       ),
     );
   }
+
+
 }

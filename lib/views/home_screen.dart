@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:appentus_task/models/UserModel.dart';
 import 'package:appentus_task/utilities/constants.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +61,21 @@ class _HomeScreenState extends State<HomeScreen> {
     UserModel user = ModalRoute.of(context).settings.arguments;
     print("Image: ${user.image}, Name: ${user.name}");
     return Scaffold(
-      appBar: Constants.appBar('Home'),
+      appBar: AppBar(
+        title: Container(
+            width: 200,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(user.name),
+                CircleAvatar(
+                  radius: 25,
+                  backgroundImage: FileImage(File(user.image)),
+                ),
+              ],
+            )
+        ),
+      ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -104,4 +120,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
