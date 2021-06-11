@@ -1,6 +1,7 @@
 import 'package:appentus_task/controller/controller.dart';
 import 'package:appentus_task/models/APIModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class SecondScreen extends StatefulWidget {
   @override
@@ -31,16 +32,36 @@ class _SecondScreenState extends State<SecondScreen> {
         future: listOfData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return GridView.builder(
+            return StaggeredGridView.countBuilder(
                 itemCount: snapshot.data.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 2,
-                ),
-                shrinkWrap: true,
+                crossAxisCount: 2,
                 itemBuilder: (context, index) {
                   height = snapshot.data[index].height;
                   width =snapshot.data[index].width;
-                  return Text("${snapshot.data[index].author}");
-                }
+                  return Card(
+                      child: Column(
+                        children: [
+                          Container(
+                            child:Image.network('${snapshot.data[index].downloadUrl}')
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                              "Author Name : ${snapshot.data[index].author}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    elevation: 5,
+                  );
+                },
+                staggeredTileBuilder: (index) =>StaggeredTile.fit(1),
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
             );
           } else if (snapshot.hasError) {
             return Center(child: Text("Error"));
