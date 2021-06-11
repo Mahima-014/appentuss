@@ -3,13 +3,12 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DbManager{
-
   var databasesPath;
   String path;
   static Database database;
   static int lastID;
   static List<Map> list;
-  static const dbName = 'gev.db';
+  static const dbName = 'appentus.db';
 
 
   // To initialization the db.
@@ -17,12 +16,18 @@ class DbManager{
     var databasePath = await getDatabasesPath();
     String path = join(databasePath, dbName);
     database = await openDatabase(path, version: 1, onCreate: (Database db, int version) async {
-       //
-      // await db.execute(
-      //     Constant.queryToCreateMobileUserDetailsTable
-      // );
+      //
+      await db.execute(
+          "CREATE TABLE user(id INTEGER PRIMARY KEY, "
+              "name varchar, "
+              "email varchar, "
+              "password varchar, "
+              "number varchar, "
+              "image varchar "
+              ")"
+      );
     });
-    print('Iitialized DB');
+    print('Initialized DB');
   }
 
   // Determine whether the table exists.
@@ -56,6 +61,8 @@ class DbManager{
     //var values = {'name':'my_name','type':'my_type'};
     await database.insert(tableName, map);
   }
+
+
 
   // To query the data.
   query(String tableName, List list) async {
@@ -131,5 +138,4 @@ class DbManager{
     database?.close();
     database = null;
   }
-
 }

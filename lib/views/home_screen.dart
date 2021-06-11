@@ -1,3 +1,4 @@
+import 'package:appentus_task/models/UserModel.dart';
 import 'package:appentus_task/utilities/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -55,6 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    UserModel user = ModalRoute.of(context).settings.arguments;
+    print("Image: ${user.image}, Name: ${user.name}");
     return Scaffold(
       appBar: Constants.appBar('Home'),
       body: Container(
@@ -82,12 +85,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                 ),
                 onPressed:(){
-                  print("Login In");
-                  // if (_formKey.currentState.validate()) {
-                  //   // If the form is valid, display a Snackbar.
-                  //   ScaffoldMessenger.of(context)
-                  //       .showSnackBar(SnackBar(content: Text('Processing Data')));
-                  // }
                   Navigator.pushNamed(context, Constants.secondScreenRoute);
 
                 },

@@ -1,3 +1,5 @@
+import 'package:appentus_task/controller/controller.dart';
+import 'package:appentus_task/models/UserModel.dart';
 import 'package:appentus_task/utilities/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +10,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
+  Controller con = Controller();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding:
                                 const EdgeInsets.only(right: 20, left: 20, top: 30),
                             child: TextFormField(
-                                keyboardType: TextInputType.phone,
+                              controller: email,
+                                keyboardType: TextInputType.emailAddress,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter some text';
@@ -46,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 20, left: 20),
                             child: TextFormField(
+                              controller: password,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter some text';
@@ -69,15 +76,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                     borderRadius: BorderRadius.circular(15.0),
                                   )
                               ),
-                              onPressed:(){
-                                print("Login In");
-                                // if (_formKey.currentState.validate()) {
-                                //   // If the form is valid, display a Snackbar.
-                                //   ScaffoldMessenger.of(context)
-                                //       .showSnackBar(SnackBar(content: Text('Processing Data')));
-                                // }
-                                Navigator.pushReplacementNamed(context, Constants.homeScreenRoute);
+                              onPressed: () async {
+                                if (_formKey.currentState.validate()) {
 
+                                  Map map = await con.login(new UserModel(
+                                      id: null,
+                                      name: null,
+                                      email: email.text,
+                                      image: null,
+                                      number: null,
+                                      password: password.text));
+
+                                  if (map==null || map.isEmpty) {
+                                    print('Invalid Credentials');
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(content: Text('Invalid Credentials. Please enter again.')));
+                                  } else {
+                                    print("User Successfully Logged In");
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(content: Text('Welcome')));
+                                    Navigator.pushNamed(context, '/home', arguments: UserModel.fromJson(map));
+                                  }
+                                }
                               },
                               child: Text(
                                 'Login',
