@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     print("User Successfully Logged In");
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(content: Text('Welcome')));
-                                    Navigator.pushNamed(context, '/home', arguments: UserModel.fromJson(map));
+                                    Navigator.pushNamed(context, Constants.homeScreenRoute, arguments: UserModel.fromJson(map));
                                   }
                                 }
                               },

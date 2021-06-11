@@ -66,14 +66,14 @@ class Controller
 
   Future<List<Map>> getDataList(String fieldName, String value) async {
     DbManager db = DbManager();
-    List<Map> list = await db.getRecords("SELECT * FROM user WHERE ${fieldName} = '$value'");
+    List<Map> list = await db.getRecords("SELECT * FROM user WHERE $fieldName = '$value'");
     return list==null? []: list;
   }
 
   Future<List<Map>> checkLogin(String email, String password) async {
     DbManager db = DbManager();
     List<Map> list = await db
-        .getRecords("SELECT * FROM user WHERE email='${email}' AND password='${password}'");
+        .getRecords("SELECT * FROM user WHERE email='$email' AND password='$password'");
     return list==null? []: list;
   }
 }

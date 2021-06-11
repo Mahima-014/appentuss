@@ -149,7 +149,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               print("User Successfully Registered");
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(SnackBar(content: Text('Registration Completed Successfully')));
-                              Navigator.pushNamed(context, "/login");
+                              Navigator.pushNamed(context, Constants.loginScreenRoute);
                             }
                           }
                         },
